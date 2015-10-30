@@ -5,15 +5,22 @@ var async = require('async');
 
 var mongod = 'mongodb://localhost:27017/weather';
 var url = 'https://pogoda.yandex.ru/static/cities.xml';
-
-async.waterfall([connect, collection, getCities, parseString, findCountry], 
-function(err, db){
-	db.close();
-	if(err)
-		console.error("Something goes wrong\n" + err);
-	else
-		console.log('Successfully saved to data base');
-});
+function downloadCities(callback){
+	async.waterfall([
+		connect,
+		collection,
+		getCities,
+		parseString,
+		findCountry
+	],function(err, db){
+		db.close();
+		if(err)
+			console.error("Something goes wrong\n" + err);
+		else
+			console.log('Successfully saved to data base');
+		callback(err);
+	});
+}
 function connect(callback){
 	MongoClient.connect(mongod, callback)
 }
@@ -71,3 +78,4 @@ function saveToDb(db, field, callback){
 		callback(err);
 	});
 }
+module.exports = downloadCities;

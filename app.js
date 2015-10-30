@@ -1,6 +1,10 @@
 var express = require('express');
 var app = express();
 var config = require('./config');
+var connect = require('./libs/mongodb').connect;
+var async = require('async');
+var server;
+var downloadCities = require('./getCities');
 
 app.set('env', config.get("NODE_ENV"));
 app.use(require('morgan')('dev', {
@@ -11,13 +15,25 @@ app.use(require('morgan')('dev', {
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res, next){
-	res.type('html');  
-	res.sendFile(__dirname + '/public/html/index.html');
-    
+app.use(function(err, req, res, next){
+	res.status(500).end("error!!");
 });
 
-var server = app.listen(config.get('port'), config.get('host'), function(){
-    console.log("Server starts at http://" + config.get('host') + ":"
+require('./routers')(app);
+
+async.series([downloadCities, function(callback){
+ 	connect(callback);
+}, function(callback){
+	var temp_server = app.listen(config.get('port'), config.get('host'), function(err){
+		callback(err, temp_server);
+	});
+}], function(err, results){
+	if(err){
+		console.error("Fatal error");
+		process.exit(1);
+	} else {
+		console.log("Server starts at http://" + config.get('host') + ":"
         + config.get('port') + " in " + app.get('env') + " mode.");
-});
+		server = results[0];
+	}
+})
