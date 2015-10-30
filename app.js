@@ -12,7 +12,9 @@ app.use(require('morgan')('dev', {
 app.use(express.static('public'));
 
 app.get('/', function(req, res, next){
-    res.end('index');
+	res.type('html');  
+	res.sendFile(__dirname + '/public/html/index.html');
+    
 });
 
 var server = app.listen(config.get('port'), config.get('host'), function(){
