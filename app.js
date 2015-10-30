@@ -5,15 +5,22 @@ var connect = require('./libs/mongodb').connect;
 var async = require('async');
 var server;
 var downloadCities = require('./getCities');
-
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.set('env', config.get("NODE_ENV"));
+
 app.use(require('morgan')('dev', {
     skip: function(){
         return app.get('env') != 'development';
     }
 }));
 
+
+
 app.use(express.static('public'));
+
+app.use(require('cookie-parser')());
 
 app.use(function(err, req, res, next){
 	res.status(500).end("error!!");
@@ -36,4 +43,4 @@ async.series([downloadCities, function(callback){
         + config.get('port') + " in " + app.get('env') + " mode.");
 		server = results[0];
 	}
-})
+});

@@ -3,9 +3,16 @@
 <head>
 	<title>Test App</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 </head>
 <body>
-	<span>Text</span>
+	<div class="input-group">
+		<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+		<span class="input-group-addon" id="basic-addon2">search</span>
+	</div>
+	<button type="button" class="btn btn-success">send</button>
+	<br>
+	<span id="text"></span>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
