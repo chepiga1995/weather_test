@@ -21,8 +21,8 @@ function getWeather(callback){
 }
 function parseString(body, callback){
 	parseXml(body, function (err, result) {
-		if(err){
-			return callback(err);
+		if(err || !result){
+			return callback(new Error(err));
 		}
 		return callback(null, result.forecast.fact, result.forecast.$.city, result.forecast.$.country);
 	});
@@ -39,7 +39,7 @@ function getInfo(fact, city, country, callback){
 		wind_direction: fact[0].wind_direction[0],
 		wind_speed: fact[0].wind_speed[0],
 		pressure: fact[0].pressure[0]._,
-		daytime: fact[0].daytime[0]
+		humidity: fact[0].humidity[0]
 	}
 	callback(null, inform);
 }

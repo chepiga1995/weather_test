@@ -1,0 +1,57 @@
+article
+	width: 300px
+	padding: 10px
+	z-index: 900
+	position: absolute
+	box-sizing: content-box;
+	margin: 10px 15px
+	overflow: hidden
+	// border: 1px solid #2993C7
+	border-radius: 4px
+	color: #444
+	// height: 150px
+	.time 
+		color: #333
+		font-size: 18px
+	.clear 
+		clear: both
+	.left
+		float: left
+		width: 55%
+		padding: 10px
+		.temperature
+			width: 55%
+			float: right
+			font-size: 30px
+			.meas
+				font-size: 15px
+				position: relative
+				top: -10px
+				left: -5px
+				color: #777
+	.right
+		float: right
+		width: 45%	
+		padding: 10px
+		.left-data
+			color: #069
+			font-size: 20px
+			position: relative
+			top: 4px
+		.measure
+			color: #777
+			font-size: 12px	
+article:hover
+	box-shadow: 0px 0px 10px 0px #2993C7
+	// border: 1px solid #fff
+
+.close
+	height: 18px
+	position: absolute
+	right: 4px
+	top: 4px
+	z-index: 1000
+	display: none
+	opacity: 0.4 !important
+.close:hover
+	opacity: 0.7 !important
