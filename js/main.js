@@ -4,10 +4,10 @@ $(document).ready(function(){
 		var text = $('.form-control').val();
 		$.ajax({
 			method: 'POST',
-			url: 'getCities',
-			data: {"text": text}
+			url: 'getWeather',
+			data: {"ids": [text]}
 		}).done(function(msg){
-			$('#text').text(msg.map(function(city){return city.city;}).join(';'))
+			$('#text').text(msg.map(function(city){return JSON.stringify(city);}).join(';'))
 		});
 	});
 });

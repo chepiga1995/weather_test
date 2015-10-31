@@ -4,4 +4,5 @@ module.exports = function(app){
 		res.sendFile(__dirname.slice(0, -8) + '/public/html/index.html');   
 	});
 	app.post('/getCities', require('./citiesList'));
+	app.post('/getWeather', require('./weather'));
 }
