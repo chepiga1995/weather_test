@@ -1,6 +1,9 @@
 var cities = require('./cities');
+var weather = require('./weather');
 var modelCities = cities.modelCities;
 var viewCities = cities.viewCities;
+var viewWeather = weather.viewWeather;
+var modelWeather = weather.modelWeather;
 
 function ajaxCities (text, callback) {
 	$.ajax({
@@ -29,39 +32,60 @@ function ajaxWeather (ids, callback) {
 
 var controller = {
 	init: function(){
-		controller.initCities();
-	}
+		this.initCities();
+		this.initWeather();
+	},
 	initCities: function(){
 		viewCities.offLiseners();
 		modelCities.init();
 		viewCities.init();
 	},
+	initWeather: function(){
+		viewWeather.offLiseners();
+		modelWeather.init();
+		viewWeather.init();
+	}, 
 	donetyping: function(){
 		var text = viewCities.getText();
 		if(!text){
 			return controller.initCities();
 		}
 		ajaxCities(text, function(err, cities){
-			if(err){
+			if(err || !cities.length){
 				return controller.initCities();
 			} 
-			viewCities.offLiseners();
-			modelCities.setData(cities);
-			var data = modelCities.getData();
-			viewCities.render(data, controller.clickTip);
+			controller.renderCities(cities);
 		});
 	},
-	clickTip: function(index){
+	renderCities: function(cities){
+		viewCities.offLiseners();
+		modelCities.setData(cities);
+		var data = modelCities.getData();
+		viewCities.render(data, this.clickCity);
+	},
+	renderWeather: function(){
+		viewWeather.offLiseners();
+		var data = modelWeather.getData();
+		viewWeather.render(data, this.removeWeather);
+	},
+	clickCity: function(index){
 		var id = modelCities.getId(index);
 		ajaxWeather([id], function(err, arrWeather){
 			controller.initCities();
 			if(!err){
-				console.log(arrWeather[0]);
+				modelWeather.addArticle(arrWeather[0]);
+				controller.renderWeather();
 			}
 		});
+	},
+	removeWeather: function(index){
+		modelWeather.removeArticle(index);
+		if(modelWeather.isEmpty()){
+			controller.initWeather(); 
+		} else {
+			controller.renderWeather();
+		}
 	}
 };
-
  
-
-module.exports = controller;
+module.exports = controller; 

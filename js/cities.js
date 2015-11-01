@@ -18,12 +18,13 @@ var modelCities = {
 	},
 	getId: function(index){
 		return this._data[index]._id;
-	} 
+	}
 };  
 
 var viewCities = {
 	init: function(){
 		$('#inner_tips').empty();
+		$('#search').val(''); 
 	},
 	render: function(data, click){
 		renderTips(data);
