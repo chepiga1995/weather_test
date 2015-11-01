@@ -20,6 +20,8 @@
     "mongodb": "^2.0.47",
     "morgan": "^1.6.1",
     "nconf": "^0.8.2",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
     "xml2js": "^0.4.13"
   },
   "repository": {
