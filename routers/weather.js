@@ -5,7 +5,7 @@ module.exports = function(req, res, next){
 	var ids = req.body.ids;
 	var results = [];
 	// console.log(ids);
-	async.each(ids, function(id, callback){
+	async.eachSeries(ids, function(id, callback){
 		getWeather(id, function(err, result){
 			results.push(result);
 			callback(err);

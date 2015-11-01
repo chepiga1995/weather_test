@@ -14,6 +14,8 @@ function getWeather(url, callback){
 			}).on('end', function() {
 				var body = Buffer.concat(bodyChunks);
 				return callback(null, body);
+			}).on('error', function(err){
+				return callback(error);
 			});
 		});
 		req.on('error', function(error){

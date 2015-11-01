@@ -1,6 +1,3 @@
-// var render = require('./render');
-// var renderArtilces = render.renderArtilces;
-// var renderTips = render.renderTips;
 require('./jqueryExpend')(jQuery); 
 var controller = require('./controller');
 

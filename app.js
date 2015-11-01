@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.set('env', config.get("NODE_ENV"));
-
+app.set('NODE_TLS_REJECT_UNAUTHORIZED', '0');
 app.use(require('morgan')('dev', {
     skip: function(){
         return app.get('env') != 'development';

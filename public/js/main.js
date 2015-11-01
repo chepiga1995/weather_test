@@ -133,8 +133,8 @@ var controller = {
 	},
 	clickCity: function(index){
 		var id = modelCities.getId(index);
+		controller.initCities();
 		ajaxWeather([id], function(err, arrWeather){
-			controller.initCities();
 			if(!err){
 				modelWeather.addArticle(arrWeather[0]);
 				modelWeather.addCookie(arrWeather[0].id);
@@ -192,9 +192,6 @@ module.exports = function($){
     });
 };
 },{}],4:[function(require,module,exports){
-// var render = require('./render');
-// var renderArtilces = render.renderArtilces;
-// var renderTips = render.renderTips;
 require('./jqueryExpend')(jQuery); 
 var controller = require('./controller');
 
