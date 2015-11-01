@@ -89,23 +89,55 @@ var Article = React.createClass({
 		var inner = this.props.data.map(function (data) {
 			var img_weather = 'img/weather_img/' + data.image + '.png';
 			var img_wind = "img/icons/" + data.wind_direction + ".png";
-			return [React.createElement('img', { className: 'close', src: 'img/close.svg' }), React.createElement(
-				'h4',
-				{ className: 'city_country' },
-				data.city,
-				', ',
-				data.country
-			), React.createElement('div', { className: 'clear' }), React.createElement(ArticleLeft, { data: data, url: img_weather }), React.createElement(ArticleRight, { data: data, url: img_wind })];
+			return React.createElement(
+				'article',
+				null,
+				React.createElement('img', { className: 'close', src: 'img/close.svg' }),
+				React.createElement(
+					'h4',
+					{ className: 'city_country' },
+					data.city,
+					', ',
+					data.country
+				),
+				React.createElement('div', { className: 'clear' }),
+				React.createElement(ArticleLeft, { data: data, url: img_weather }),
+				React.createElement(ArticleRight, { data: data, url: img_wind })
+			);
 		});
 		return React.createElement(
-			'article',
+			'div',
 			null,
 			inner
 		);
 	}
 });
+
+var Tips = React.createClass({
+	render: function () {
+		var inner = this.props.data.map(function (data) {
+			return React.createElement(
+				'li',
+				null,
+				data.city,
+				', ',
+				data.country
+			);
+		});
+		return React.createElement(
+			'ul',
+			{ className: 'tips' },
+			inner
+		);
+	}
+});
+
 function renderArtilces(Artilces) {
 	ReactDOM.render(React.createElement(Article, { data: Artilces }), document.getElementById('inner'));
 }
+function renderTips(tips) {
+	ReactDOM.render(React.createElement(Tips, { data: tips }), document.getElementById('inner_tips'));
+}
 
 module.exports.renderArtilces = renderArtilces;
+module.exports.renderTips = renderTips;

@@ -74,7 +74,7 @@ article:hover {
   position: absolute;
   right: 4px;
   top: 4px;
-  z-index: 1000;
+  z-index: 990;
   display: none;
   opacity: 0.4 !important;
 }
@@ -82,19 +82,45 @@ article:hover {
 .close:hover {
   opacity: 0.7 !important;
 }
+#inner_tips {
+  position: relative;
+  z-index: 1000;
+}
+
 header {
   height: 150px;
   background-image: url("../img/clouds_header.jpg");
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: 0 -65px;
-  overflow: hidden;
+  padding-top: 1px;
 }
 
-#search {
+header .search_field {
   width: 40%;
   min-width: 200px;
   margin: 50px auto;
+}
+
+header .tips {
+  list-style-type: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  padding-left: 0px;
+}
+
+header .tips li {
+  padding: 8px;
+  color: #555;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+}
+
+header .tips li:hover {
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 .input-group {
   width: 50%;

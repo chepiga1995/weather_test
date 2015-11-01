@@ -4,7 +4,7 @@ var config = require('./config');
 var connect = require('./libs/mongodb').connect;
 var async = require('async');
 var server;
-var downloadCities = require('./getCities');
+var downloadCities = require('./libs/getCities');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());

@@ -3,50 +3,24 @@
 <head>
 	<title>Test App</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
 	<header>
-		<input type="text" class="form-control" placeholder="Город" id="search">
+		<div class="search_field"> 
+			<input type="text" class="form-control" placeholder="Город" id="search">
+			<div id="inner_tips">
+			</div>
+			
+		</div>
 	</header>
 	
 	<!-- <button type="button" class="btn btn-success">send</button> -->
 	<div id="inner">
 		
 	</div>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	
-	<!-- <article>
-		<img class="close" src="img/close.svg">
-		<h4 class="city_country">Москва, Россия</h4>
-		<div class="clear"></div>
-		<div class="left">
-			<div class="img_temperature">
-				<img src="img/weather_img/skc_d.png" title="ясно">
-				<div class="temperature">
-					+2
-					<span class="meas">°C</span>
-				</div>
-			</div>	
-		</div>
-		<div class="right">
-			<div class="wind">
-				<img src="img/icons/se.png">
-				<span class="left-data">30.0</span>
-				<span class="measure">м/с</span>
-			</div>
-			<div class="pressure">
-				<img src="img/icons/pressure.png">
-				<span class="left-data">761</span>
-				<span class="measure">мм рт. ст.</span>
-			</div>
-			<div class="humidity">
-				<img src="img/icons/humidity.png">
-				<span class="left-data">56%</span>
-				<span class="measure">влажн.</span>
-			</div>
-		</div>
-	</article> -->
-</body>
+	</body>
 </html>
