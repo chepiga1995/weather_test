@@ -24,7 +24,7 @@ module.exports = function($){
                     timeoutReference = setTimeout(function(){
                         // if we made it here, our timeout has elapsed. Fire the
                         // callback
-                        doneTyping(el);
+                        doneTyping(el); 
                     }, timeout);
                 }).on('blur',function(){
                     // If we can, fire the event since we're leaving the field

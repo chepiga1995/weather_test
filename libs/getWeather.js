@@ -4,21 +4,22 @@ var async = require('async');
 
 var url = 'https://export.yandex.ru/weather-ng/forecasts/{{id}}.xml';
 
-function getWeather(callback){
-	var req = https.get(url, function(res) {
-		console.log('request sent to: ' + url + '\nSTATUS: ' + res.statusCode);
-		var bodyChunks = [];
-		url = 'https://export.yandex.ru/weather-ng/forecasts/{{id}}.xml';
-		res.on('data', function(chunk) {
-			bodyChunks.push(chunk);
-		}).on('end', function() {
-			var body = Buffer.concat(bodyChunks);
-			return callback(null, body);
+function getWeather(url, callback){
+	return function(callback){
+		var req = https.get(url, function(res) {
+			console.log('request sent to: ' + url + '\nSTATUS: ' + res.statusCode);
+			var bodyChunks = [];
+			res.on('data', function(chunk) {
+				bodyChunks.push(chunk);
+			}).on('end', function() {
+				var body = Buffer.concat(bodyChunks);
+				return callback(null, body);
+			});
 		});
-	});
-	req.on('error', function(error){
-		return callback(error);
-	});
+		req.on('error', function(error){
+			return callback(error);
+		});
+	}
 }
 function parseString(body, callback){
 	parseXml(body, function (err, result) {
@@ -47,9 +48,9 @@ function getInfo(fact, city, country, id, callback){
 }
 
 module.exports = function (id, callback) {
-	url = url.replace('{{id}}', id);
+	var url_temp = url.replace('{{id}}', id);
 	async.waterfall([
-		getWeather,
+		getWeather(url_temp),
 		parseString,
 		getInfo
 		], callback);

@@ -3,8 +3,14 @@ var renderArtilces = render.renderArtilces;
 
 var modelWeather = {
 	_data: [],
+	_cookies: [],
 	init: function() {
 		this._data = [];
+		try{
+			this._cookies = JSON.parse(Cookies.get('cities'));
+		} catch(e){
+			this._cookies = [];	
+		}
 	},
 	getData: function(){
 		return this._data;
@@ -23,7 +29,22 @@ var modelWeather = {
 	},
 	addArticle: function(Article){
 		this._data.push(Article);
-	} 
+	},
+	addCookie: function(id){
+		this._cookies.push(id);
+		this._setCookies();
+	},
+	_setCookies: function(){
+		var text = JSON.stringify(this._cookies);
+		Cookies.set('cities', text, { expires: 30 });
+	},
+	removeCookie: function(index){
+		this._cookies.splice(index, 1);
+		this._setCookies();
+	},
+	getCookies: function(){
+		return this._cookies;
+	}
 };  
 
 var viewWeather = {

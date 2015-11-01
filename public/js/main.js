@@ -95,6 +95,18 @@ var controller = {
 		viewWeather.offLiseners();
 		modelWeather.init();
 		viewWeather.init();
+		this.getWeatherFormCookie();
+	},
+	getWeatherFormCookie: function(){
+		var cookies = modelWeather.getCookies();
+		if(!cookies.length)
+			return; 
+		ajaxWeather(cookies, function(err, arrWeather){
+			if(!err){
+				modelWeather.setData(arrWeather);
+				controller.renderWeather();
+			}
+		});
 	}, 
 	donetyping: function(){
 		var text = viewCities.getText();
@@ -102,7 +114,7 @@ var controller = {
 			return controller.initCities();
 		}
 		ajaxCities(text, function(err, cities){
-			if(err || !cities.length){
+			if(err){
 				return controller.initCities();
 			} 
 			controller.renderCities(cities);
@@ -125,12 +137,14 @@ var controller = {
 			controller.initCities();
 			if(!err){
 				modelWeather.addArticle(arrWeather[0]);
+				modelWeather.addCookie(arrWeather[0].id);
 				controller.renderWeather();
 			}
 		});
 	},
 	removeWeather: function(index){
 		modelWeather.removeArticle(index);
+		modelWeather.removeCookie(index);
 		if(modelWeather.isEmpty()){
 			controller.initWeather(); 
 		} else {
@@ -167,7 +181,7 @@ module.exports = function($){
                     timeoutReference = setTimeout(function(){
                         // if we made it here, our timeout has elapsed. Fire the
                         // callback
-                        doneTyping(el);
+                        doneTyping(el); 
                     }, timeout);
                 }).on('blur',function(){
                     // If we can, fire the event since we're leaving the field
@@ -339,8 +353,14 @@ var renderArtilces = render.renderArtilces;
 
 var modelWeather = {
 	_data: [],
+	_cookies: [],
 	init: function() {
 		this._data = [];
+		try{
+			this._cookies = JSON.parse(Cookies.get('cities'));
+		} catch(e){
+			this._cookies = [];	
+		}
 	},
 	getData: function(){
 		return this._data;
@@ -359,7 +379,22 @@ var modelWeather = {
 	},
 	addArticle: function(Article){
 		this._data.push(Article);
-	} 
+	},
+	addCookie: function(id){
+		this._cookies.push(id);
+		this._setCookies();
+	},
+	_setCookies: function(){
+		var text = JSON.stringify(this._cookies);
+		Cookies.set('cities', text, { expires: 30 });
+	},
+	removeCookie: function(index){
+		this._cookies.splice(index, 1);
+		this._setCookies();
+	},
+	getCookies: function(){
+		return this._cookies;
+	}
 };  
 
 var viewWeather = {

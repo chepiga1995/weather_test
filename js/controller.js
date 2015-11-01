@@ -44,6 +44,18 @@ var controller = {
 		viewWeather.offLiseners();
 		modelWeather.init();
 		viewWeather.init();
+		this.getWeatherFormCookie();
+	},
+	getWeatherFormCookie: function(){
+		var cookies = modelWeather.getCookies();
+		if(!cookies.length)
+			return; 
+		ajaxWeather(cookies, function(err, arrWeather){
+			if(!err){
+				modelWeather.setData(arrWeather);
+				controller.renderWeather();
+			}
+		});
 	}, 
 	donetyping: function(){
 		var text = viewCities.getText();
@@ -51,7 +63,7 @@ var controller = {
 			return controller.initCities();
 		}
 		ajaxCities(text, function(err, cities){
-			if(err || !cities.length){
+			if(err){
 				return controller.initCities();
 			} 
 			controller.renderCities(cities);
@@ -74,12 +86,14 @@ var controller = {
 			controller.initCities();
 			if(!err){
 				modelWeather.addArticle(arrWeather[0]);
+				modelWeather.addCookie(arrWeather[0].id);
 				controller.renderWeather();
 			}
 		});
 	},
 	removeWeather: function(index){
 		modelWeather.removeArticle(index);
+		modelWeather.removeCookie(index);
 		if(modelWeather.isEmpty()){
 			controller.initWeather(); 
 		} else {
